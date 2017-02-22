@@ -34,8 +34,6 @@ var createBoardHtml = function() {
       $boardRowsArray.eq(i).append($newCell);
     }
   }
-
-
 }
 
 
@@ -52,6 +50,7 @@ var checkIfWin = function(board, player) {
 var checkRowWin = function(board, player) {
   for (var row = 0; row < board.length; row++) {
     if (checkThreeSame(board[row], player)) {
+      $('.cell[data-row='+row+']').addClass('highlight-win');
       return true;
     }
   }
@@ -62,6 +61,7 @@ var checkColumnWin = function(board, player) {
   for (var i = 0; i < board.length; i++) {
     var column = [board[0][i], board[1][i], board[2][i]];
     if (checkThreeSame(column, player)) {
+      $('.cell[data-column='+i+']').addClass('highlight-win');
       return true;
     }
   }
@@ -72,6 +72,15 @@ var checkDiagonalWin = function(board, player) {
   var diagonals = [[board[0][0], board[1][1], board[2][2]],[board[0][2], board[1][1], board[2][0]]];
   for (var i = 0; i < diagonals.length; i++) {
     if (checkThreeSame(diagonals[i], player)) {
+      if (i === 0) {
+        $('.cell[data-column=0][data-row=0]').addClass('highlight-win');
+        $('.cell[data-column=1][data-row=1]').addClass('highlight-win');
+        $('.cell[data-column=2][data-row=2]').addClass('highlight-win');
+      } else {
+        $('.cell[data-column=0][data-row=2]').addClass('highlight-win');
+        $('.cell[data-column=1][data-row=1]').addClass('highlight-win');
+        $('.cell[data-column=2][data-row=0]').addClass('highlight-win');
+      }
       return true;
     }
   }
@@ -110,9 +119,6 @@ var checkForTie = function() {
   return false;
 }
 
-var askForRestart = function() {
-
-}
 
 var notAlreadyTaken = function(event) {
   return (event.target.className.split(' ').indexOf('taken') === -1);
@@ -123,11 +129,15 @@ var reset = function() {
   gameNotOver = true;
   $('.board .cell')
     .text('')
-    .removeClass('taken');
+    .removeClass('taken')
+    .removeClass('highlight-win');
 }
 
 var gameNotOver = true;
 var currentPlayer = 'x';
+var winCountX = 0;
+var winCountO = 0;
+var tieCount = 0;
 var board = createBoardArray();
 createBoardHtml();
 

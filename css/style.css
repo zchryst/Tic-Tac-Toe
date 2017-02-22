@@ -12,9 +12,6 @@ body {
   width: 4em;
   height: 4em;
   background-color: black;
-  /*margin: 2px;*/
-  /*border: 2px solid black;*/
-  /*border-radius: 2em;*/
   text-align: center;
   line-height: 4em;
   vertical-align: middle;
@@ -24,18 +21,18 @@ body {
 }
 
 .internal-row {
-  margin-top: 2px;
-  margin-bottom: 2px;
+  border-top: 2px solid white;
+  border-bottom: 2px solid white;
 }
 
 .internal-col {
-  margin-left: 2px;
-  margin-right: 2px;
+  border-left: 2px solid white;
+  border-right: 2px solid white;
 }
 
 .row {
-  background-color: white;
-  display: inline-block;
+  /*background-color: white;*/
+  /*display: inline-block;*/
   /*padding: px;*/
 }
 
@@ -44,9 +41,31 @@ body {
   width: 80%;
   margin: 0 auto;
   text-align: center;
+
 }
 
+.highlight-win {
+  background-color: chartreuse;
+}
 
 .taken {
-  background-color: tomato;
+  /*background-color: tomato;*/
+}
+
+.score div {
+  width: 30%;
+  display: inline-block;
+  color: white;
+  font-size: 1.5em;
+  border: 2px solid lightgrey;
+  padding: .5em;
+  margin: .5em;
+}
+
+.score {
+  display: inline-block;
+  width: 80%;
+  margin: 10px auto;
+  text-align: center;
+
 }
