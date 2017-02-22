@@ -1,0 +1,52 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  text-align: center;
+  font-family: 'Nunito', sans-serif;
+  background-color: black;
+}
+
+.cell {
+  width: 4em;
+  height: 4em;
+  background-color: black;
+  /*margin: 2px;*/
+  /*border: 2px solid black;*/
+  /*border-radius: 2em;*/
+  text-align: center;
+  line-height: 4em;
+  vertical-align: middle;
+  font-size: 2.5em;
+  display: inline-block;
+  color: white;
+}
+
+.internal-row {
+  margin-top: 2px;
+  margin-bottom: 2px;
+}
+
+.internal-col {
+  margin-left: 2px;
+  margin-right: 2px;
+}
+
+.row {
+  background-color: white;
+  display: inline-block;
+  /*padding: px;*/
+}
+
+.board {
+  display: inline-block;
+  width: 80%;
+  margin: 0 auto;
+  text-align: center;
+}
+
+
+.taken {
+  background-color: tomato;
+}
