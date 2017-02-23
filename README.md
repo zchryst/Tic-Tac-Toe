@@ -23,5 +23,6 @@ Getting into the CSS I wanted stick with a pretty minimal interface. CSS transit
 ..* A win on board sizes greater than 3x3 can be checked for
 ..* The diagonal checker is less hard coded
 * Towards the end of writing this script some of the functions began to get a little bit hairy - it would be good to break these up into smaller, more specific, functions.
+* I had been initially thinking that on a tie event you could have the option to expand the board to 4x4 or even further to a connect-four board but ran out of time to get to that level of complexity. 
 
 ### [PLAY THE GAME HERE](https://zchryst.github.io/Tic-Tac-Toe/)
