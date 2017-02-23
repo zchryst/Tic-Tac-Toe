@@ -50,7 +50,8 @@ var checkIfWin = function(board, player) {
 var checkRowWin = function(board, player) {
   for (var row = 0; row < board.length; row++) {
     if (checkThreeSame(board[row], player)) {
-      $('.cell[data-row='+row+']').addClass('highlight-win');
+      $('.cell[data-row='+row+']')
+        .addClass('highlight-win');
       return true;
     }
   }
@@ -61,7 +62,8 @@ var checkColumnWin = function(board, player) {
   for (var i = 0; i < board.length; i++) {
     var column = [board[0][i], board[1][i], board[2][i]];
     if (checkThreeSame(column, player)) {
-      $('.cell[data-column='+i+']').addClass('highlight-win');
+      $('.cell[data-column='+i+']')
+        .addClass('highlight-win');
       return true;
     }
   }
@@ -69,17 +71,25 @@ var checkColumnWin = function(board, player) {
 }
 
 var checkDiagonalWin = function(board, player) {
-  var diagonals = [[board[0][0], board[1][1], board[2][2]],[board[0][2], board[1][1], board[2][0]]];
+  var diagonals =
+    [[board[0][0], board[1][1], board[2][2]]
+    ,[board[0][2], board[1][1], board[2][0]]];
   for (var i = 0; i < diagonals.length; i++) {
     if (checkThreeSame(diagonals[i], player)) {
       if (i === 0) {
-        $('.cell[data-column=0][data-row=0]').addClass('highlight-win');
-        $('.cell[data-column=1][data-row=1]').addClass('highlight-win');
-        $('.cell[data-column=2][data-row=2]').addClass('highlight-win');
+        $('.cell[data-column=0][data-row=0]')
+          .addClass('highlight-win');
+        $('.cell[data-column=1][data-row=1]')
+          .addClass('highlight-win');
+        $('.cell[data-column=2][data-row=2]')
+          .addClass('highlight-win');
       } else {
-        $('.cell[data-column=0][data-row=2]').addClass('highlight-win');
-        $('.cell[data-column=1][data-row=1]').addClass('highlight-win');
-        $('.cell[data-column=2][data-row=0]').addClass('highlight-win');
+        $('.cell[data-column=0][data-row=2]')
+          .addClass('highlight-win');
+        $('.cell[data-column=1][data-row=1]')
+          .addClass('highlight-win');
+        $('.cell[data-column=2][data-row=0]')
+          .addClass('highlight-win');
       }
       return true;
     }
@@ -97,10 +107,17 @@ var checkThreeSame = function(threeArray, player) {
   }
 }
 
+var togglePlayerIndicator = function() {
+  $('.x-score').parent().toggleClass('current');
+  $('.o-score').parent().toggleClass('current');
+}
+
 var switchPlayerTurn = function() {
   if (currentPlayer === 'x') {
+    togglePlayerIndicator();
     currentPlayer = 'o';
   } else {
+    togglePlayerIndicator();
     currentPlayer = 'x';
   }
   return currentPlayer;
@@ -124,13 +141,52 @@ var notAlreadyTaken = function(event) {
   return (event.target.className.split(' ').indexOf('taken') === -1);
 }
 
+var increaseWinCount = function(player) {
+  if (player === 'x') {
+    winCountX++;
+  } else {
+    winCountO++;
+  }
+}
+
+var createScoreCounter = function() {
+  var scoreBoxText = [['PLAYER X - ', 'x-score'],
+    ['PLAYER O - ', 'o-score'],
+    ['TIES - ', 'tie-score']];
+  var $scoreDiv = $('.score');
+  for (var i = 0; i < scoreBoxText.length; i++) {
+    var $scoreSpan = $('<span>')
+      .addClass(scoreBoxText[i][1]);
+    var $newScoreBox = $('<div>')
+      .addClass('score-box')
+      .text(scoreBoxText[i][0]);
+    $newScoreBox.append($scoreSpan);
+    $scoreDiv.append($newScoreBox);
+  }
+}
+
+var updateWinCount = function() {
+  $('.x-score').text(winCountX);
+  $('.o-score').text(winCountO);
+  $('.tie-score').text(tieCount);
+}
+
 var reset = function() {
   board = createBoardArray();
   gameNotOver = true;
-  $('.board .cell')
-    .text('')
-    .removeClass('taken')
-    .removeClass('highlight-win');
+  var $cellsArray = $('.board .cell');
+  for (var i = 0; i < $cellsArray.length; i++) {
+    if ($cellsArray.eq(i).hasClass('highlight-win') === false) {
+      $cellsArray.eq(i).addClass('highlight-loss');
+    } else {
+      $cellsArray.eq(i).addClass('text-background-same');
+    }
+  }
+  setTimeout(function() {
+    $cellsArray.text('')
+      .removeClass('taken')
+      .removeClass('highlight-win') .removeClass('text-background-same') .removeClass('highlight-loss');
+  }, 1000);
 }
 
 var gameNotOver = true;
@@ -140,6 +196,10 @@ var winCountO = 0;
 var tieCount = 0;
 var board = createBoardArray();
 createBoardHtml();
+createScoreCounter();
+updateWinCount();
+$('.x-score').parent().addClass('current');
+
 
 var mainRun = function(event) {
   if (notAlreadyTaken(event)) {
@@ -149,9 +209,11 @@ var mainRun = function(event) {
       .addClass('taken');
     if (checkIfWin(board, currentPlayer)) {
       $('.board .cell').addClass('taken');
-      console.log(currentPlayer + ' IS THE WINNER');
+      increaseWinCount(currentPlayer);
+      updateWinCount();
     } else if (checkForTie()) {
-      console.log('ITS A TIE MOTHER FLIPPERS!')
+      tieCount++;
+      updateWinCount();
     }
     currentPlayer = switchPlayerTurn();
   }

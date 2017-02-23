@@ -18,7 +18,11 @@ body {
   font-size: 2.5em;
   display: inline-block;
   color: white;
+  -webkit-transition: background-color 1s, color 1s, border-color 1s;
+  transition: background-color 1s, color 1s, border-color 1s;
 }
+
+
 
 .internal-row {
   border-top: 2px solid white;
@@ -30,10 +34,15 @@ body {
   border-right: 2px solid white;
 }
 
-.row {
-  /*background-color: white;*/
-  /*display: inline-block;*/
-  /*padding: px;*/
+.text-background-same {
+  color: chartreuse;
+  border-color: chartreuse;
+}
+
+.highlight-loss {
+  background-color: tomato;
+  color: tomato;
+  border-color: tomato;
 }
 
 .board {
@@ -52,20 +61,26 @@ body {
   /*background-color: tomato;*/
 }
 
-.score div {
+.score-box {
   width: 30%;
   display: inline-block;
   color: white;
   font-size: 1.5em;
   border: 2px solid lightgrey;
   padding: .5em;
-  margin: .5em;
+  margin: .5em 1em;
+  -webkit-transition: background-color 1s;
+  transition: background-color 1s;
+}
+
+.current {
+  background-color: steelblue;
 }
 
 .score {
   display: inline-block;
   width: 80%;
-  margin: 10px auto;
+  margin: 25px auto;
   text-align: center;
 
 }
